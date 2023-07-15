@@ -33,6 +33,7 @@ class _MainScreenState extends State<MainScreen> {
     'Map',
     'Detail',
     'Credits',
+    'Settings',
   ];
 
   void _selectScreen(int index) {
@@ -73,6 +74,8 @@ class _MainScreenState extends State<MainScreen> {
         return DetailScreen();
       case 5:
         return CreditsScreen();
+      case 6:
+        return SettingsScreen();
       default:
         return WelcomeScreen();
     }
@@ -83,12 +86,173 @@ class WelcomeScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-      child: Center(
-        child: Text('Welcome Screen'), // Display the welcome message
+      child: Stack(
+        children: [
+          // Background image
+          Positioned.fill(
+            child: Image.asset(
+              'images/background.png', // Replace with your background image path
+              fit: BoxFit.cover,
+            ),
+          ),
+          Column(
+            children: [
+              // Top section with image and centered text
+              Container(
+                height: MediaQuery.of(context).size.height * 0.2,
+                decoration: BoxDecoration(
+                  image: DecorationImage(
+                    image: AssetImage('images/BHS Front Steps-HDR1.jpg'), // Replace with your image path
+                    fit: BoxFit.cover,
+                  ),
+                ),
+                child: Center(
+                  child: Text(
+                    'Aztec App',
+                    style: TextStyle(
+                      fontFamily: 'BarberOutline',
+                      fontSize: 100,
+                      color: Colors.white,
+                    ),
+                  ),
+                ),
+              ),
+              // Next section with two columns
+              Expanded(
+                child: Row(
+                  children: [
+                    Expanded(
+                      child: Container(
+                        color: Colors.transparent,
+                        child: Column(
+                          children: [
+                            Text(
+                              'Lorem Ipsum',
+                              style: TextStyle(
+                                fontFamily: 'Arial Narrow',
+                                fontSize: 10,
+                                color: Colors.white,
+                              ),
+                            ),
+                            // Add additional text or widgets as needed
+                          ],
+                        ),
+                      ),
+                    ),
+                    Expanded(
+                      child: Container(
+                        color: Colors.transparent,
+                        child: Column(
+                          children: [
+                            Text(
+                              'Lorem Ipsum',
+                              style: TextStyle(
+                                fontFamily: 'Arial Narrow',
+                                fontSize: 10,
+                                color: Colors.white,
+                              ),
+                            ),
+                            // Add additional text or widgets as needed
+                          ],
+                        ),
+                      ),
+                    ),
+                  ],
+                ),
+              ),
+              // Row with the "Start" button
+              Row(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  ElevatedButton(
+                    onPressed: () {
+                      // Add the button functionality
+                    },
+                    style: ElevatedButton.styleFrom(
+                      primary: Colors.blue,
+                      shape: RoundedRectangleBorder(
+                        borderRadius: BorderRadius.circular(20),
+                      ),
+                    ),
+                    child: Padding(
+                      padding: const EdgeInsets.all(8.0),
+                      child: Text(
+                        'Start',
+                        style: TextStyle(
+                          fontFamily: 'Arial Narrow',
+                          fontSize: 14,
+                          color: Colors.white,
+                        ),
+                      ),
+                    ),
+                  ),
+                ],
+              ),
+              // Row with the "Brought to you by:" text
+              Row(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  Text(
+                    'Brought to you by:',
+                    style: TextStyle(
+                      fontFamily: 'Arial Narrow',
+                      fontSize: 12,
+                      color: Colors.white,
+                    ),
+                  ),
+                ],
+              ),
+              // Row with the "Credits" button
+              Row(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  TextButton(
+                    onPressed: () {
+                      // Add the button functionality
+                    },
+                    child: Text(
+                      'Credits',
+                      style: TextStyle(
+                        fontFamily: 'Arial Narrow',
+                        fontSize: 10,
+                        color: Colors.white,
+                      ),
+                    ),
+                  ),
+                ],
+              ),
+              // Scrollable row with three images
+              SingleChildScrollView(
+                scrollDirection: Axis.horizontal,
+                child: Row(
+                  children: [
+                    Container(
+                      width: 100,
+                      height: 100,
+                      child: Image.asset('images/aztec logo.png'), // Replace with your image path
+                    ),
+                    Container(
+                      width: 100,
+                      height: 100,
+                      child: Image.asset('images/bhs cte logo.png'), // Replace with your image path
+                    ),
+                    Container(
+                      width: 100,
+                      height: 100,
+                      child: Image.asset('images/bhs computer science students logo.png'), // Replace with your image path
+                    ),
+                  ],
+                ),
+              ),
+            ],
+          ),
+        ],
       ),
     );
   }
 }
+
+
 
 class PeriodTimerScreen extends StatelessWidget {
   @override
@@ -140,6 +304,17 @@ class CreditsScreen extends StatelessWidget {
     return Container(
       child: Center(
         child: Text('Credits Screen'), // Display the credits content
+      ),
+    );
+  }
+}
+
+class SettingsScreen extends StatelessWidget {
+  @override
+  Widget build(BuildContext context) {
+    return Container(
+      child: Center(
+        child: Text('Settings Screen'), // Display the credits content
       ),
     );
   }

@@ -1,0 +1,44 @@
+I'm working on creating a Flutter app.  I'd like the app to work on both iOS and Android cell phone devices, the web, and Windows machines.
+
+Let me describe it's big structure and then go into the details of each page.  Do you think I will need more than one file to do all of this?
+
+There will be six screens total.  They are called "Welcome", "Period Timer", "Place List", "Map", "Detail", "Credits".  Should I describe each of the screens to you all at once, or one at a time?
+
+Before we start the Welcome screen I want to make sure that we can navigate between each of the screens.  Could you please add a Drawer Navigator that can be pulled out with a finger swipe on touch devices or with the click on a hamburger button with three lines in the top left.Before we start the Welcome screen I want to make sure that we can navigate between each of the screens.  Could you please add a Drawer Navigator that can be pulled out with a finger swipe on touch devices or with the click on a hamburger button with three lines in the top left.  Each of the screens will be on it and can be navigated between with blank pages.
+
+WELCOME
+
+The Welcome screen will have an image that I will choose later in the top 20%.  On top of the image centered both horizontally and vertically will be Arial Black white text that says "Aztec App".  In the next section below that put a different background image.  On top of this split it into two columns with Lorem Ipsum placeholder text in each column.  All this text should be Arial Narrow font, size 10, in white.  Below that text is a new row with a rounded corner blue button with white text that says "Start". Below that is another row that says in a size 12 Arial Narrow font "Brought to you by:".  Another row below that will have a transparent button with small white text that says "Credits".  The last row at the bottom can scroll left to right and in it are three images side by side, aligned with each other horizontally.
+
+
+
+TIMER
+I'd like to create a screen with a black background, large 50 point white text for hour, minute, and second.  Let there be a semicolon between each number  Let the countdown timer default to 00:53:00.  
+
+Add start a button that begin the countdown, and a reset button with a Colors.red[800] background that resets it back to 0 hours, 53 minutes and 0 seconds.  Update the seconds, minutes, and hours as they counting down.  Please include the code to  import dart:async at the top of the file as Timer class is part of this library.
+
+Next I would like to create a new row on the top part of the same screen for the existing timer and buttons in it taking 20% of the screen height in the device's portrait position, add a second new row below it taking 65% of screen height for a scrollable list, and a third row at the bottom for a navigation bar with 15% of the screen height. In the second row, I want a vertically scrollable list of school periods that says "Period 1", "Period 2", Period 3", "Period 5", "Period 6", and "Period 7" all with a white background and black bold text.  Before each period 1, 2, and 3, put the text "5m Pass" also in black text, white background, and in italics, not bold.  After third period, add the text "Lunch A" in 'Colors.red[800]' and bold, and then another passing period with the text "  5m Pass" in black italics.  Next put "Period 4a" in black bold text.  Group "  Lunch A", the following "  5m Pass", and "Period 4a" together by changing their background to a light gray.  Next have a short row with white background spacing with no text.  Next include the text "5m Pass" in black italics, "Period 4b" in black bold, and then the text "  Lunch B" in bold and 'Colors.red[800]'. Below that switch back to a white background.  The next rows include one with the text "  5m Pass" in black italics, another row with "Period 5" in black bold, the next row with the text "  5m Pass" in black italics, the next row with "Period 6" in black bold, the next row with the text "  5m Pass" in black italics, the next row with "Period 7" in black bold.  Each one of the rows with text in this top section needs to be associated with a time start and time duration.  
+
+Here is the CSV file pasted in showing the first column with the numbers that I want to show next to each title.  I want the numbers to be saved in a time based format so that I can round them up or down.
+  5m Pass,7:10,7:14:59
+Period 1,7:15,8:07:59
+  5m Pass,8:08,8:12:59
+Period 2,8:13,9:05:59
+  5m Pass,9:06,9:10:59
+Period 3,9:11,10:07:59
+  Lunch A,10:08,10:37:59
+  5m Pass,10:38,10:42:59
+Period 4a,10:43,11:35:59
+  5m Pass,10:08,10:12:59
+Period 4b,10:13,11:05:59
+  Lunch B,11:06,11:35:59
+  5m Pass,11:36,11:40:59
+Period 5,11:41,12:33:59
+  5m Pass,12:34,12:38:59
+Period 6,12:39,13:31:59
+  5m Pass,13:32,13:36:59
+Period 7,13:37,14:31
+
+Also create some constant variables: one for FIRST_BELL which starts at the time of 7:10 AM,  one for REG_DAY_PERIOD_LENGTH which is 52 minutes and 59 seconds, one for MIN_DAY_PERIOD_LENGTH which is 37 minutes and 59 seconds, PASSING_PERIOD_LENGTH which is 4 minutes and 59 seconds, LUNCH_LENGTH which is 29 minutes and 59 seconds, and a non-constant variable called todaysPeriodLength which is equal to a calculation like this: if today is Monday, Tuesday, Thursday or Friday, it will be equal to REG_DAY_PERIOD_LENGTH, if today is a Wednesday, it will be equal to MIN_DAY_PERIOD_LENGTH.
+
+Ask me questions before generating the code if you need clarification.
