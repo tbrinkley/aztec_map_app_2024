@@ -11,7 +11,7 @@ class MyApp extends StatelessWidget {
     return MaterialApp(
       title: 'Aztec Map',
       theme: ThemeData(
-        primarySwatch: Colors.red[800],
+        primarySwatch: Colors.red,
       ),
       home: MainScreen(),
     );
@@ -46,7 +46,7 @@ class _MainScreenState extends State<MainScreen> {
     // Scaffold widget provides the basic structure for the app's layout
     return Scaffold(
       appBar: AppBar(
-        title: Text('Your App'), // Display the app title in the app bar
+        title: Text('Aztec App'), // Display the app title in the app bar
       ),
       drawer: AppDrawer(
         screenNames: screenNames, // List of screen names for the drawer items
