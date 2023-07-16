@@ -1,5 +1,6 @@
+import 'dart:async';
 import 'package:flutter/material.dart';
-import 'app_drawer.dart';
+import 'package:intl/intl.dart';
 
 void main() {
   runApp(MyApp());
@@ -42,30 +43,43 @@ class _MainScreenState extends State<MainScreen> {
     });
   }
 
+  void _navigateToPeriodTimerScreen() {
+    setState(() {
+      _currentScreenIndex = 1; // Navigate to the PeriodTimerScreen
+    });
+  }
+
+  void startCountdownTimer() {
+    // Call the startCountdown function in PeriodTimerScreen
+    final periodTimerScreen = _buildCurrentScreen() as PeriodTimerScreen?;
+    periodTimerScreen?.startCountdown();
+  }
+
   @override
   Widget build(BuildContext context) {
-    // Scaffold widget provides the basic structure for the app's layout
     return Scaffold(
       appBar: AppBar(
-        title: Text('Aztec App'), // Display the app title in the app bar
+        title: Text('Aztec App'),
       ),
       drawer: AppDrawer(
-        screenNames: screenNames, // List of screen names for the drawer items
-        selection: _currentScreenIndex, // Index of the selected screen
-        onScreenSelected: _selectScreen, // Callback function when a screen is selected
-        context: context, // Pass the context from the widget tree
+        screenNames: screenNames,
+        selection: _currentScreenIndex,
+        onScreenSelected: _selectScreen,
+        navigateToPeriodTimerScreen: _navigateToPeriodTimerScreen,
+        context: context, // Pass the context from the widget tree on the left
       ),
       body: _buildCurrentScreen(), // Build the currently selected screen
     );
   }
 
   Widget _buildCurrentScreen() {
-    // Build the appropriate screen based on the current screen index
     switch (_currentScreenIndex) {
       case 0:
-        return WelcomeScreen();
+        return WelcomeScreen(startCountdownTimer: startCountdownTimer);
       case 1:
-        return PeriodTimerScreen();
+        return PeriodTimerScreen(
+          startCountdown: startCountdownTimer,
+        );
       case 2:
         return PlaceListScreen();
       case 3:
@@ -77,32 +91,34 @@ class _MainScreenState extends State<MainScreen> {
       case 6:
         return SettingsScreen();
       default:
-        return WelcomeScreen();
+        return WelcomeScreen(startCountdownTimer: startCountdownTimer);
     }
   }
 }
 
 class WelcomeScreen extends StatelessWidget {
+  final VoidCallback startCountdownTimer;
+
+  WelcomeScreen({required this.startCountdownTimer});
+
   @override
   Widget build(BuildContext context) {
     return Container(
       child: Stack(
         children: [
-          // Background image
           Positioned.fill(
             child: Image.asset(
-              'images/background.png', // Replace with your background image path
+              'images/background.png',
               fit: BoxFit.cover,
             ),
           ),
           Column(
             children: [
-              // Top section with image and centered text
               Container(
                 height: MediaQuery.of(context).size.height * 0.2,
                 decoration: BoxDecoration(
                   image: DecorationImage(
-                    image: AssetImage('images/BHS Front Steps-HDR1.jpg'), // Replace with your image path
+                    image: AssetImage('images/BHS Front Steps-HDR1.jpg'),
                     fit: BoxFit.cover,
                   ),
                 ),
@@ -117,7 +133,6 @@ class WelcomeScreen extends StatelessWidget {
                   ),
                 ),
               ),
-              // Next section with two columns
               Expanded(
                 child: Row(
                   children: [
@@ -127,14 +142,13 @@ class WelcomeScreen extends StatelessWidget {
                         child: Column(
                           children: [
                             Text(
-                              'Lorem Ipsum',
+                              '\n' 'Lorem Ipsum',
                               style: TextStyle(
-                                fontFamily: 'Arial Narrow',
-                                fontSize: 10,
+                                fontFamily: 'Economica',
+                                fontSize: 20,
                                 color: Colors.white,
                               ),
                             ),
-                            // Add additional text or widgets as needed
                           ],
                         ),
                       ),
@@ -145,14 +159,13 @@ class WelcomeScreen extends StatelessWidget {
                         child: Column(
                           children: [
                             Text(
-                              'Lorem Ipsum',
+                              '\n' 'Lorem Ipsum',
                               style: TextStyle(
-                                fontFamily: 'Arial Narrow',
-                                fontSize: 10,
+                                fontFamily: 'Economica',
+                                fontSize: 20,
                                 color: Colors.white,
                               ),
                             ),
-                            // Add additional text or widgets as needed
                           ],
                         ),
                       ),
@@ -160,14 +173,11 @@ class WelcomeScreen extends StatelessWidget {
                   ],
                 ),
               ),
-              // Row with the "Start" button
               Row(
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
                   ElevatedButton(
-                    onPressed: () {
-                      // Add the button functionality
-                    },
+                    onPressed: startCountdownTimer,
                     style: ElevatedButton.styleFrom(
                       primary: Colors.blue,
                       shape: RoundedRectangleBorder(
@@ -188,7 +198,6 @@ class WelcomeScreen extends StatelessWidget {
                   ),
                 ],
               ),
-              // Row with the "Brought to you by:" text
               Row(
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
@@ -202,7 +211,6 @@ class WelcomeScreen extends StatelessWidget {
                   ),
                 ],
               ),
-              // Row with the "Credits" button
               Row(
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
@@ -221,7 +229,6 @@ class WelcomeScreen extends StatelessWidget {
                   ),
                 ],
               ),
-              // Scrollable row with three images
               SingleChildScrollView(
                 scrollDirection: Axis.horizontal,
                 child: Row(
@@ -229,17 +236,18 @@ class WelcomeScreen extends StatelessWidget {
                     Container(
                       width: 100,
                       height: 100,
-                      child: Image.asset('images/aztec logo.png'), // Replace with your image path
+                      child: Image.asset('images/aztec logo.png'),
                     ),
                     Container(
                       width: 100,
                       height: 100,
-                      child: Image.asset('images/bhs cte logo.png'), // Replace with your image path
+                      child: Image.asset('images/bhs cte logo.png'),
                     ),
                     Container(
                       width: 100,
                       height: 100,
-                      child: Image.asset('images/bhs computer science students logo.png'), // Replace with your image path
+                      child:
+                      Image.asset('images/bhs computer science students logo.png'),
                     ),
                   ],
                 ),
@@ -252,14 +260,314 @@ class WelcomeScreen extends StatelessWidget {
   }
 }
 
+class Period {
+  final String name;
+  final TimeOfDay startTime;
+  final TimeOfDay endTime;
 
+  Period({
+    required this.name,
+    required this.startTime,
+    required this.endTime,
+  });
+}
 
-class PeriodTimerScreen extends StatelessWidget {
+class PeriodTimerScreen extends StatefulWidget {
+  final VoidCallback startCountdown;
+
+  PeriodTimerScreen({required this.startCountdown});
+
+  @override
+  _PeriodTimerScreenState createState() => _PeriodTimerScreenState();
+}
+
+class _PeriodTimerScreenState extends State<PeriodTimerScreen> {
+  final List<Period> periodList = [
+    Period(
+      name: '5m Pass',
+      startTime: TimeOfDay(hour: 7, minute: 10),
+      endTime: TimeOfDay(hour: 7, minute: 14),
+    ),
+    Period(
+      name: 'Period 1',
+      startTime: TimeOfDay(hour: 7, minute: 15),
+      endTime: TimeOfDay(hour: 8, minute: 7),
+    ),
+    Period(
+      name: '5m Pass',
+      startTime: TimeOfDay(hour: 8, minute: 8),
+      endTime: TimeOfDay(hour: 8, minute: 12),
+    ),
+    Period(
+      name: 'Period 2',
+      startTime: TimeOfDay(hour: 8, minute: 13),
+      endTime: TimeOfDay(hour: 9, minute: 5),
+    ),
+    Period(
+      name: '5m Pass',
+      startTime: TimeOfDay(hour: 9, minute: 6),
+      endTime: TimeOfDay(hour: 9, minute: 10),
+    ),
+    Period(
+      name: 'Period 3',
+      startTime: TimeOfDay(hour: 9, minute: 11),
+      endTime: TimeOfDay(hour: 10, minute: 7),
+    ),
+    Period(
+      name: 'Lunch A',
+      startTime: TimeOfDay(hour: 10, minute: 8),
+      endTime: TimeOfDay(hour: 10, minute: 37),
+    ),
+    Period(
+      name: 'Period 4a',
+      startTime: TimeOfDay(hour: 10, minute: 38),
+      endTime: TimeOfDay(hour: 11, minute: 30),
+    ),
+    Period(
+      name: '5m Pass',
+      startTime: TimeOfDay(hour: 11, minute: 31),
+      endTime: TimeOfDay(hour: 11, minute: 35),
+    ),
+    Period(
+      name: 'Period 4b',
+      startTime: TimeOfDay(hour: 11, minute: 36),
+      endTime: TimeOfDay(hour: 12, minute: 28),
+    ),
+    Period(
+      name: 'Lunch B',
+      startTime: TimeOfDay(hour: 12, minute: 29),
+      endTime: TimeOfDay(hour: 13, minute: 0),
+    ),
+    Period(
+      name: '5m Pass',
+      startTime: TimeOfDay(hour: 13, minute: 1),
+      endTime: TimeOfDay(hour: 13, minute: 5),
+    ),
+    Period(
+      name: 'Period 5',
+      startTime: TimeOfDay(hour: 13, minute: 6),
+      endTime: TimeOfDay(hour: 13, minute: 58),
+    ),
+    Period(
+      name: '5m Pass',
+      startTime: TimeOfDay(hour: 13, minute: 59),
+      endTime: TimeOfDay(hour: 14, minute: 3),
+    ),
+    Period(
+      name: 'Period 6',
+      startTime: TimeOfDay(hour: 14, minute: 4),
+      endTime: TimeOfDay(hour: 14, minute: 56),
+    ),
+    Period(
+      name: '5m Pass',
+      startTime: TimeOfDay(hour: 14, minute: 57),
+      endTime: TimeOfDay(hour: 15, minute: 1),
+    ),
+    Period(
+      name: 'Period 7',
+      startTime: TimeOfDay(hour: 15, minute: 2),
+      endTime: TimeOfDay(hour: 15, minute: 30),
+    ),
+    // Add a fallback period to represent when school is not in session
+    Period(
+      name: 'No School',
+      startTime: TimeOfDay(hour: 0, minute: 0),
+      endTime: TimeOfDay(hour: 0, minute: 0),
+    ),
+  ];
+
+  late Timer _timer;
+  Duration _countdownDuration = Duration.zero;
+
+  @override
+  void initState() {
+    super.initState();
+    startCountdown();
+  }
+
+  void startCountdown() {
+    final currentTime = TimeOfDay.now();
+    final currentPeriod = periodList.firstWhere(
+          (period) => isTimeOfDayBetween(currentTime, period.startTime, period.endTime),
+      orElse: () => Period(
+        name: 'No School',
+        startTime: TimeOfDay(hour: 0, minute: 0),
+        endTime: TimeOfDay(hour: 0, minute: 0),
+      ),
+    );
+
+    if (currentPeriod != null) {
+      final startTime = DateTime(
+        DateTime.now().year,
+        DateTime.now().month,
+        DateTime.now().day,
+        currentPeriod.startTime.hour,
+        currentPeriod.startTime.minute,
+      );
+
+      final currentTimeDT = DateTime.now();
+
+      setState(() {
+        _countdownDuration = startTime.difference(currentTimeDT);
+      });
+
+      _timer = Timer.periodic(const Duration(seconds: 1), (timer) {
+        setState(() {
+          if (_countdownDuration.inSeconds > 0) {
+            _countdownDuration -= const Duration(seconds: 1);
+          } else {
+            timer.cancel();
+            startNextPeriodCountdown();
+          }
+        });
+      });
+    } else {
+      setState(() {
+        _countdownDuration = Duration.zero;
+      });
+    }
+  }
+
+  void startNextPeriodCountdown() {
+    final now = TimeOfDay.now();
+    final currentIndex = periodList.indexWhere(
+          (period) =>
+      period.startTime.hour > now.hour ||
+          (period.startTime.hour == now.hour && period.startTime.minute > now.minute),
+    );
+
+    if (currentIndex != -1 && currentIndex < periodList.length - 1) {
+      final currentPeriod = periodList[currentIndex];
+      final nextPeriod = periodList[currentIndex + 1];
+
+      final startTime = DateTime(
+        DateTime.now().year,
+        DateTime.now().month,
+        DateTime.now().day,
+        currentPeriod.endTime.hour,
+        currentPeriod.endTime.minute,
+      );
+      final endTime = DateTime(
+        DateTime.now().year,
+        DateTime.now().month,
+        DateTime.now().day,
+        nextPeriod.startTime.hour,
+        nextPeriod.startTime.minute,
+      );
+
+      final durationDifference = endTime.difference(startTime);
+      setState(() {
+        _countdownDuration = durationDifference;
+      });
+      startCountdown();
+    } else {
+      setState(() {
+        _countdownDuration = Duration.zero;
+      });
+    }
+  }
+
+  bool isTimeOfDayBetween(
+      TimeOfDay timeToCheck,
+      TimeOfDay startTime,
+      TimeOfDay endTime,
+      ) {
+    final now = DateTime.now();
+    final currentTime = DateTime(
+      now.year,
+      now.month,
+      now.day,
+      timeToCheck.hour,
+      timeToCheck.minute,
+    );
+    final start = DateTime(
+      now.year,
+      now.month,
+      now.day,
+      startTime.hour,
+      startTime.minute,
+    );
+    final end = DateTime(
+      now.year,
+      now.month,
+      now.day,
+      endTime.hour,
+      endTime.minute,
+    );
+
+    return currentTime.isAfter(start) && currentTime.isBefore(end);
+  }
+
+  String formatTimeOfDay(TimeOfDay time) {
+    final now = DateTime.now();
+    final dateTime = DateTime(
+      now.year,
+      now.month,
+      now.day,
+      time.hour,
+      time.minute,
+    );
+    final formatter = DateFormat('h:mm a');
+    return formatter.format(dateTime);
+  }
+
+  @override
+  void dispose() {
+    _timer.cancel();
+    super.dispose();
+  }
+
   @override
   Widget build(BuildContext context) {
     return Container(
-      child: Center(
-        child: Text('Period Timer Screen'), // Display the period timer content
+      color: Colors.black,
+      child: Column(
+        children: [
+          Container(
+            height: MediaQuery.of(context).size.height * 0.3,
+            child: Center(
+              child: Text(
+                _countdownDuration != Duration.zero
+                    ? _countdownDuration.inSeconds > 0
+                    ? 'Countdown: ${_countdownDuration.inMinutes}m ${_countdownDuration.inSeconds.remainder(60)}s'
+                    : 'Time Up!'
+                    : 'No School',
+                style: TextStyle(
+                  fontSize: 32.0,
+                  color: Colors.white,
+                  fontWeight: FontWeight.bold,
+                ),
+              ),
+            ),
+          ),
+          Expanded(
+            child: Container(
+              alignment: Alignment.center,
+              child: ListView.builder(
+                itemCount: periodList.length,
+                itemBuilder: (context, index) {
+                  final period = periodList[index];
+                  return ListTile(
+                    title: Text(
+                      period.name,
+                      style: TextStyle(
+                        fontSize: 20.0,
+                        color: Colors.white,
+                      ),
+                    ),
+                    subtitle: Text(
+                      '${formatTimeOfDay(period.startTime)} - ${formatTimeOfDay(period.endTime)}',
+                      style: TextStyle(
+                        fontSize: 16.0,
+                        color: Colors.white,
+                      ),
+                    ),
+                  );
+                },
+              ),
+            ),
+          ),
+        ],
       ),
     );
   }
@@ -270,7 +578,10 @@ class PlaceListScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     return Container(
       child: Center(
-        child: Text('Place List Screen'), // Display the place list content
+        child: Text(
+          'Place List Screen',
+          style: TextStyle(fontSize: 24.0),
+        ),
       ),
     );
   }
@@ -281,7 +592,10 @@ class MapScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     return Container(
       child: Center(
-        child: Text('Map Screen'), // Display the map content
+        child: Text(
+          'Map Screen',
+          style: TextStyle(fontSize: 24.0),
+        ),
       ),
     );
   }
@@ -292,7 +606,10 @@ class DetailScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     return Container(
       child: Center(
-        child: Text('Detail Screen'), // Display the detail content
+        child: Text(
+          'Detail Screen',
+          style: TextStyle(fontSize: 24.0),
+        ),
       ),
     );
   }
@@ -303,7 +620,10 @@ class CreditsScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     return Container(
       child: Center(
-        child: Text('Credits Screen'), // Display the credits content
+        child: Text(
+          'Credits Screen',
+          style: TextStyle(fontSize: 24.0),
+        ),
       ),
     );
   }
@@ -314,46 +634,87 @@ class SettingsScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     return Container(
       child: Center(
-        child: Text('Settings Screen'), // Display the credits content
+        child: Text(
+          'Settings Screen',
+          style: TextStyle(fontSize: 24.0),
+        ),
       ),
     );
   }
 }
 
 class AppDrawer extends StatelessWidget {
-  final List<String> screenNames; // List of screen names for the drawer items
-  final int selection; // Index of the selected screen
-  final Function(int) onScreenSelected; // Callback function when a screen is selected
-  final BuildContext context; // The context from the widget tree
+  final List<String> screenNames;
+  final int selection;
+  final ValueChanged<int> onScreenSelected;
+  final VoidCallback navigateToPeriodTimerScreen;
+  final BuildContext context;
 
   AppDrawer({
     required this.screenNames,
     required this.selection,
     required this.onScreenSelected,
+    required this.navigateToPeriodTimerScreen,
     required this.context,
   });
 
   @override
   Widget build(BuildContext context) {
-    // Drawer widget provides a side drawer for navigation
     return Drawer(
-      child: ListView(
-        children: buildDrawerItems(), // Build the drawer items
+      child: ListView.builder(
+        itemCount: screenNames.length + 1,
+        itemBuilder: (context, index) {
+          if (index == 0) {
+            return DrawerHeader(
+              decoration: BoxDecoration(
+                color: Colors.red,
+              ),
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                mainAxisAlignment: MainAxisAlignment.end,
+                children: [
+                  Text(
+                    'Aztec App',
+                    style: TextStyle(
+                      color: Colors.white,
+                      fontSize: 24,
+                    ),
+                  ),
+                  Text(
+                    'Beta',
+                    style: TextStyle(
+                      color: Colors.white,
+                      fontSize: 14,
+                    ),
+                  ),
+                ],
+              ),
+            );
+          }
+
+          final itemIndex = index - 1;
+          final isSelected = itemIndex == selection;
+
+          return ListTile(
+            title: Text(
+              screenNames[itemIndex],
+              style: TextStyle(
+                fontSize: 16.0,
+                fontWeight: isSelected ? FontWeight.bold : FontWeight.normal,
+              ),
+            ),
+            onTap: () {
+              if (itemIndex == 1) {
+                navigateToPeriodTimerScreen();
+              } else {
+                onScreenSelected(itemIndex);
+              }
+
+              Navigator.pop(context); // Close the drawer
+            },
+          );
+        },
       ),
     );
-  }
-
-  List<Widget> buildDrawerItems() {
-    // Generate drawer items based on the screen names
-    return List.generate(screenNames.length, (index) {
-      return ListTile(
-        title: Text(screenNames[index]), // Set the title of the drawer item
-        onTap: () {
-          onScreenSelected(index); // Call the callback function when a drawer item is tapped
-          Navigator.pop(context); // Close the drawer after a drawer item is tapped
-        },
-        selected: selection == index, // Set the selected state of the drawer item
-      );
-    });
   }
 }

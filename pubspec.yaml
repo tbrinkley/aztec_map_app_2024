@@ -30,6 +30,7 @@ environment:
 dependencies:
   flutter:
     sdk: flutter
+  intl: ^0.17.0
 
 
   # The following adds the Cupertino Icons font to your application.
@@ -82,8 +83,8 @@ flutter:
     - family: BarberOutline
       fonts:
         - asset: fonts/BarberOutline.ttf
+          weight: 900
     #      - asset: fonts/TrajanPro_Bold.ttf
-    #        weight: 700
     - family: SuperSized
       fonts:
         - asset: fonts/SuperSized.ttf
