@@ -817,14 +817,14 @@ class AppDrawer extends StatelessWidget {
                   Text(
                     'Aztec App',
                     style: TextStyle(
-                      color: Colors.white,
+                      color: Colors.black,
                       fontSize: 24,
                     ),
                   ),
                   Text(
                     'Beta',
                     style: TextStyle(
-                      color: Colors.white,
+                      color: Colors.black,
                       fontSize: 14,
                     ),
                   ),
