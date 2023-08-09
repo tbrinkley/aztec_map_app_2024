@@ -629,19 +629,160 @@ class CreditsScreen extends StatelessWidget {
   }
 }
 
-class SettingsScreen extends StatelessWidget {
+class SettingsScreen extends StatefulWidget {
+  @override
+  _SettingsScreenState createState() => _SettingsScreenState();
+}
+
+class _SettingsScreenState extends State<SettingsScreen>
+    with SingleTickerProviderStateMixin {
+  late TabController _tabController;
+
+  @override
+  void initState() {
+    super.initState();
+    _tabController = TabController(length: 2, vsync: this);
+  }
+
+  @override
+  void dispose() {
+    _tabController.dispose();
+    super.dispose();
+  }
+
   @override
   Widget build(BuildContext context) {
-    return Container(
-      child: Center(
-        child: Text(
-          'Settings Screen',
-          style: TextStyle(fontSize: 24.0),
+    return Scaffold(
+      appBar: AppBar(
+        title: Text('Settings'),
+        bottom: TabBar(
+          controller: _tabController,
+          tabs: [
+            Tab(text: 'Timer'),
+            Tab(text: 'Map'),
+          ],
         ),
+      ),
+      body: TabBarView(
+        controller: _tabController,
+        children: [
+          TimerSettings(),
+          MapSettings(),
+        ],
       ),
     );
   }
 }
+
+class TimerSettings extends StatefulWidget {
+  @override
+  _TimerSettingsState createState() => _TimerSettingsState();
+}
+
+class _TimerSettingsState extends State<TimerSettings>
+    with SingleTickerProviderStateMixin {
+  late TabController _subTabController;
+
+  @override
+  void initState() {
+    super.initState();
+    _subTabController = TabController(length: 4, vsync: this);
+  }
+
+  @override
+  void dispose() {
+    _subTabController.dispose();
+    super.dispose();
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    return Column(
+      children: [
+        TabBar(
+          controller: _subTabController,
+          tabs: [
+            Tab(
+              child: Text(
+                'Regular',
+                style: TextStyle(
+                  color: Colors.black, // Change text color to black
+                  fontWeight: FontWeight.bold, // Make text bold
+                ),
+              ),
+            ),
+            Tab(
+              child: Text(
+                'Minimum',
+                style: TextStyle(
+                  color: Colors.black, // Change text color to black
+                  fontWeight: FontWeight.bold, // Make text bold
+                ),
+              ),
+            ),
+            Tab(
+              child: Text(
+                'Assembly',
+                style: TextStyle(
+                  color: Colors.black, // Change text color to black
+                  fontWeight: FontWeight.bold, // Make text bold
+                ),
+              ),
+            ),
+            Tab(
+              child: Text(
+                'Finals',
+                style: TextStyle(
+                  color: Colors.black, // Change text color to black
+                  fontWeight: FontWeight.bold, // Make text bold
+                ),
+              ),
+            ),
+          ],
+        ),
+        Expanded(
+          child: TabBarView(
+            controller: _subTabController,
+            children: [
+              ScheduleSettings(scheduleType: 'Regular'),
+              ScheduleSettings(scheduleType: 'Minimum'),
+              ScheduleSettings(scheduleType: 'Assembly'),
+              ScheduleSettings(scheduleType: 'Finals'),
+            ],
+          ),
+        ),
+      ],
+    );
+  }
+}
+
+
+class ScheduleSettings extends StatelessWidget {
+  final String scheduleType;
+
+  ScheduleSettings({required this.scheduleType});
+
+  @override
+  Widget build(BuildContext context) {
+    // Implement your specific settings UI based on the scheduleType
+    return Container(
+      padding: EdgeInsets.all(16.0),
+      child: Text('Settings for $scheduleType Schedule'),
+    );
+  }
+}
+
+class MapSettings extends StatelessWidget {
+  @override
+  Widget build(BuildContext context) {
+    // Implement your map-related settings UI here
+    return Container(
+      padding: EdgeInsets.all(16.0),
+      child: Text('Map Settings'),
+    );
+  }
+}
+
 
 class AppDrawer extends StatelessWidget {
   final List<String> screenNames;
