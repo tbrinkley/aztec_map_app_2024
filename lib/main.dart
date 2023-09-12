@@ -179,7 +179,7 @@ class WelcomeScreen extends StatelessWidget {
                   ElevatedButton(
                     onPressed: startCountdownTimer,
                     style: ElevatedButton.styleFrom(
-                      primary: Colors.blue,
+                      backgroundColor: Colors.blue,
                       shape: RoundedRectangleBorder(
                         borderRadius: BorderRadius.circular(20),
                       ),
@@ -619,15 +619,133 @@ class CreditsScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-      child: Center(
-        child: Text(
-          'Credits Screen',
-          style: TextStyle(fontSize: 24.0),
+      child: const Center(
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: <Widget>[
+            Text(
+              'Credits Screen',
+              style: TextStyle(fontSize: 24.0),
+            ),
+            SizedBox(height: 20), // Add some spacing
+
+            // Programming Lead
+            Text(
+              'Programming Lead: Timothy Brinkley',
+              style: TextStyle(fontSize: 16.0),
+            ),
+
+            SizedBox(height: 20), // Add spacing
+
+            // Current Student Programmers - 2023
+            Text(
+              '2023',
+              style: TextStyle(fontSize: 20.0, fontWeight: FontWeight.bold),
+            ),
+            SizedBox(height: 10), // Add spacing
+            Text(
+              'Student Programmers:',
+              style: TextStyle(fontSize: 16.0, fontWeight: FontWeight.bold),
+            ),
+            Text(
+              'Samilyel Frazier',
+              style: TextStyle(fontSize: 16.0),
+            ),
+            Text(
+              'Nehemiah Rocker',
+              style: TextStyle(fontSize: 16.0),
+            ),
+
+            SizedBox(height: 20), // Add more spacing
+
+            // Previous Student Programmers - 2019
+            Text(
+              '2019',
+              style: TextStyle(fontSize: 20.0, fontWeight: FontWeight.bold),
+            ),
+            SizedBox(height: 10), // Add spacing
+            Text(
+              'Student Contributors:',
+              style: TextStyle(fontSize: 16.0, fontWeight: FontWeight.bold),
+            ),
+            Center( // Wrap the italicized text in a Center widget
+              child: Text(
+                'Helped in numerous ways such as: finding GPS coordinates, taking pictures, and coding.',
+                style: TextStyle(fontSize: 16.0, fontStyle: FontStyle.italic),
+              ),
+            ),
+            Text(
+              'Mikayla Singkum',
+              style: TextStyle(fontSize: 16.0),
+            ),
+            Text(
+              'Michael Rodriguez',
+              style: TextStyle(fontSize: 16.0),
+            ),
+            Text(
+              'Alan Avila Nenenses',
+              style: TextStyle(fontSize: 16.0),
+            ),
+            Text(
+              'Liliana Martina Ortega',
+              style: TextStyle(fontSize: 16.0),
+            ),
+            Text(
+              'Anthony Laulu',
+              style: TextStyle(fontSize: 16.0),
+            ),
+            Text(
+              'Johnny Lopez',
+              style: TextStyle(fontSize: 16.0),
+            ),
+            Text(
+              'Robert Gibson',
+              style: TextStyle(fontSize: 16.0),
+            ),
+            Text(
+              'Jacob Duke',
+              style: TextStyle(fontSize: 16.0),
+            ),
+            Text(
+              'Gabriela Contreras',
+              style: TextStyle(fontSize: 16.0),
+            ),
+            Text(
+              'Miles Washington',
+              style: TextStyle(fontSize: 16.0),
+            ),
+            Text(
+              'Mario Jaramillo',
+              style: TextStyle(fontSize: 16.0),
+            ),
+            Text(
+              'Ian Carson',
+              style: TextStyle(fontSize: 16.0),
+            ),
+            Text(
+              'Vivian Gonzales',
+              style: TextStyle(fontSize: 16.0),
+            ),
+            Text(
+              'Christian Mitchell',
+              style: TextStyle(fontSize: 16.0),
+            ),
+            Text(
+              'Nathaniel Karres',
+              style: TextStyle(fontSize: 16.0),
+            ),
+            Text(
+              'Mason Soberg',
+              style: TextStyle(fontSize: 16.0),
+            ),
+          ],
         ),
       ),
     );
   }
 }
+
+
 
 class SettingsScreen extends StatefulWidget {
   @override
