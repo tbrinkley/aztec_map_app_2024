@@ -631,8 +631,10 @@ class CreditsScreen extends StatelessWidget {
 
             // Programming Lead
             Text(
-              'Programming Lead: Timothy Brinkley',
+              'Programming Lead, Facilitator: \n'
+                  'Timothy Brinkley',
               style: TextStyle(fontSize: 16.0),
+              textAlign: TextAlign.center,
             ),
 
             SizedBox(height: 20), // Add spacing
