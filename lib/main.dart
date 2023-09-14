@@ -668,11 +668,12 @@ class CreditsScreen extends StatelessWidget {
               'Student Contributors:',
               style: TextStyle(fontSize: 16.0, fontWeight: FontWeight.bold),
             ),
-            Center( // Wrap the italicized text in a Center widget
-              child: Text(
-                'Helped in numerous ways such as: finding GPS coordinates, taking pictures, and coding.',
-                style: TextStyle(fontSize: 16.0, fontStyle: FontStyle.italic),
-              ),
+            Text(
+              'Helped in numerous ways such as: \n'
+                  'finding GPS coordinates, taking pictures, \n'
+                  'and coding.',
+              style: TextStyle(fontSize: 16.0, fontStyle: FontStyle.italic),
+              textAlign: TextAlign.center,
             ),
             Text(
               'Mikayla Singkum',
