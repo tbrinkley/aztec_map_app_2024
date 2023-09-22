@@ -1,12 +1,20 @@
-# my_app1
+# aztec_map_app_2024
 
-A new Flutter project.
+The main code is under lib/main.dart.  It has screens as follows:
+* Welcome
+* Place List
+* Map
+* Details
+* Period Timer
+* Credits
+* Settings
 
 ## Getting Started
 
-This project is a starting point for a Flutter application.
+The purpose of this app is to help new students adjust to the new campus more easily, find classes, and understand the bell schedule.
+This Flutter project is a collaborative development between different classes at Barstow High School.  
 
-A few resources to get you started if this is your first Flutter project:
+For New Collaborators: A few resources to get you started if this is your first Flutter project:
 
 - [Lab: Write your first Flutter app](https://docs.flutter.dev/get-started/codelab)
 - [Cookbook: Useful Flutter samples](https://docs.flutter.dev/cookbook)
