@@ -1,6 +1,7 @@
 import 'dart:async';
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
+import 'package:google_maps_flutter/google_maps_flutter.dart';
 
 void main() {
   runApp(MyApp());
@@ -9,9 +10,8 @@ void main() {
 class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(
-      title: 'Aztec Map',
-      theme: ThemeData(
+      theme,
+      title: 'Aztec Map': ThemeData(
         primarySwatch: Colors.red,
       ),
       home: MainScreen(),
@@ -587,14 +587,40 @@ class PlaceListScreen extends StatelessWidget {
   }
 }
 
-class MapScreen extends StatelessWidget {
+class MapScreen extends StatefulWidget {
+  @override
+  _MapScreenState createState() => _MapScreenState();
+}
+
+class _MapScreenState extends State<MapScreen> {
+  // Initialize the _mapController field in the initState() method.
+  GoogleMapController _mapController;
+
+  @override
+  void initState() {
+    super.initState();
+
+    // Create a new instance of the GoogleMapController class.
+    _mapController = GoogleMapController();
+  }
+
   @override
   Widget build(BuildContext context) {
-    return Container(
-      child: Center(
-        child: Text(
-          'Map Screen',
-          style: TextStyle(fontSize: 24.0),
+    return Scaffold(
+      appBar: AppBar(
+        title: Text('Aztec Map'),
+      ),
+      body: GoogleMap(
+        // Use the onMapReady named parameter to get the GoogleMapController object.
+        onMapReady: (GoogleMapController controller) {
+          // Set the _mapController field to the controller object.
+          setState(() {
+            _mapController = controller;
+          });
+        },
+        initialCameraPosition: const CameraPosition(
+          target: LatLng(34.8826, -117.0276), // Barstow High School
+          zoom: 14.0,
         ),
       ),
     );
